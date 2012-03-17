@@ -1,0 +1,6 @@
+Goal
+Using Node.js, Redis, the Twitter API, Express and (optionally) Socket.io to write a program that keeps track of links and words that appear associated with them in tweets.
+
+Display the results to the user in some way using the Express web framework.
+
+For example, a bare minimum for this project might be a program that keeps track of all the links that appear with the word 'awesome' and then presents the 'awesomest' links to the user.
