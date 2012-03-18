@@ -22,20 +22,28 @@ twitter.stream(
 
 	function(stream){
 		stream.on('data', function(tweet){
-			//console.log(tweet.text); //write the tweets to the console
 
-		try {
-			if (tweet.entities.urls[0].expanded_url != " ") { 
-				URL = tweet.entities.urls[0].expanded_url;
+			try {
+				//test for expanded URLs
+				if (tweet.entities.urls[0].expanded_url != " ") { 
+					URL = tweet.entities.urls[0].expanded_url; 
+					}
+				//test for shortened URLs
+				else if (tweet.entities.urls[0].url !=  " ") {
+					URL = tweet.entities.urls[0].url; //test for url
+					}
+
+					console.log(URL); //display the URL 
+
+					//store the URL in a sorted set in REDIS
+					client.zincrby('awesome', 1, URL); 
 				}
-			else if (tweet.entities.urls[0].url !=  " ") {
-				URL = tweet.entities.urls[0].url;
+
+				catch (error) {
 				}
-			console.log(URL);
-			}
-		catch (error) {
-			}
-			
+
+				
+					
 		});
 	}
 );
