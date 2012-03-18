@@ -6,16 +6,24 @@ var client = redis.createClient();
 http.createServer(function (request, response) {
 	response.writeHead(200, {'Content-Type': 'text/html'});
 
-		count = client.zcount('awesome');
 
-		client.zrevrangebyscore('awesome', '+inf', '-inf', 'withscores', function(err, results){
-			response.end('Awesome Links: ' + "<br />" + results);
-	});
+		var count = 5; //client.zcount('awesome', '-inf', '+inf');
+
+		client.zrevrangebyscore('awesome', '+inf', '-inf', function(error, results){
+
+			var linkString;
+
+			for (var i=0; i<count; i++){
+				linkString += results[i] + '<br />';
+			}
+			
+			response.end(linkString);
+				
+		});
 
 
 }).listen(3000);
 
 console.log('Server running on port 3000');
-
 
 
