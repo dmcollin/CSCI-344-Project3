@@ -7,14 +7,20 @@ http.createServer(function (request, response) {
 	response.writeHead(200, {'Content-Type': 'text/html'});
 
 
-		var count = 5; //client.zcount('awesome', '-inf', '+inf');
+		
 
 		client.zrevrangebyscore('awesome', '+inf', '-inf', function(error, results){
-
+		//client.zrevrangebyscore('awesome', '+inf', '-inf', 'withscores', function(error, results){
 			var linkString;
+			var count = 15; //client.zcount('awesome', '-inf', '+inf');
+
 
 			for (var i=0; i<count; i++){
-				linkString += results[i] + '<br />';
+				//var score = client.zscore('awesome', 'i');
+
+				linkString += results[i] + '<br />' +
+				// ' Score - ' + score + '<br />' +
+				 ' Count - ' + i + '<br /> <br />';
 			}
 			
 			response.end(linkString);
