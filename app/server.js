@@ -7,25 +7,21 @@ http.createServer(function (request, response) {
 	response.writeHead(200, {'Content-Type': 'text/html'});
 
 
-		
 
-		client.zrevrangebyscore('awesome', '+inf', '-inf', function(error, results){
-		//client.zrevrangebyscore('awesome', '+inf', '-inf', 'withscores', function(error, results){
-			var linkString;
-			var count = 15; //client.zcount('awesome', '-inf', '+inf');
+	client.zrevrangebyscore('awesome', '+inf', '-inf', 'withscores', function(error, results){
+		var responseString = "";
 
-
-			for (var i=0; i<count; i++){
-				//var score = client.zscore('awesome', 'i');
-
-				linkString += results[i] + '<br />' +
-				// ' Score - ' + score + '<br />' +
-				 ' Count - ' + i + '<br /> <br />';
+			for (var i = 0 ; i < results.length ; i++) {
+				if (i%2 == 0){
+					responseString += results[i];
+				}
+				else if (i%2 == 1){
+					responseString += " - " + results[i] + "<br />";
+				}
 			}
-			
-			response.end(linkString);
-				
-		});
+			response.end(responseString);
+	});	
+
 
 
 }).listen(3000);
