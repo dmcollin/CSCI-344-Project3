@@ -7,8 +7,7 @@ var express = require('express')
   , routes = require('./routes');
 
 var awesome = require('./controllers/word/awesome');
-
-
+var ejs = require('ejs');
 var app = module.exports = express.createServer();
 
 // Configuration
@@ -33,8 +32,8 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
-
 app.get('/word/awesome', awesome.index);
+app.get('/word/:word', routes.word);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

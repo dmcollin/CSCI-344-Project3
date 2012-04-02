@@ -1,39 +1,51 @@
-
 var redis = require('redis');
 var client = redis.createClient();
 
 exports.index = function(req, res) {
-    client.zrevrangebyscore('awesome', '+inf', '-inf', 'withscores', function(error, results){
+  //pull results from redis sorted set ordered by score, highest score first
+  client.zrevrangebyscore('awesome', '+inf', '-inf', 'withscores', function(error, results){
     var responseString = "";
-    var limit = 38; //will display 20, since the counts are part of the results
-      if (results.length > limit){
-        responseString += "<div class='linkurltop'> <a href='" + results[0] + "'>" + results[0] + "</a>" + " - " + results[1] + "</div><br />";
-        
-        for (var i = 2 ; i < limit ; i++) { 
-           if (i%2 == 0){
-                responseString += "<li> <a href='" + results[i] + "'>" + results[i] + "'</a>";
-              }
-             else if (i%2 == 1){
-                responseString += " - " + results[i] + "</li><br />";
-             }
-            }
-      }
-      else {
-        responseString += "<div class='linkurltop'> <a href='" + results[0] + "'>" + results[0] + "</a>" + " - " + results[1] + "</div><br />";
-        for (var i = 2 ; i < results.length ; i++) { 
-          if (i%2 == 0){
-            responseString += "<li> <a href='" + results[i] + "'>" + results[i] + "'</a>";
-          }
-         else if (i%2 == 1){
-            responseString += " - " + results[i] + "</li><br />";
-         }
-        }
-      }
+    var topLinkString = "";
+    var topLinkNumTweets;
+    var mostTracking = 20; //will display 9, since the scores are part of the results
+	var limit;
+	
+	//check amount of links in the results to display no more than amount assigned in mostTracking variable
+	if (results.length > mostTracking){
+		limit = mostTracking
+	}
+	else {
+		limit = results.length;
+	}
 
-      res.render('word/awesome', {awesomeLinks:responseString});
-  }); 
+	//pull top link to send via topAwesomeLink
+    topLinkString += "<a href='" + results[0] + "'>" + results[0] + "</a>"; 
+
+  //pull score from top link to send via topAwesomeLinkNumTweets
+    topLinkNumTweets = results[1];
+
+	//pull remaining links and attach to responseString
+    for (var i = 2 ; i < limit ; i++) {
+		  if (i%2 == 0){
+			 responseString += "<a href='" + results[i] + "'>" + results[i] + "'</a>";
+		   }
+      
+		  else if (i%2 == 1){
+        if (results[i] > 1){
+			     responseString += " (Tweeted " + results[i] + " times!) <br />";
+         }
+        else if (results[i] = 1){
+          responseString += " (Tweeted just once.) <br />";
+        }
+		  }
+     
+    }
+
+	  //send responseString to awesomeLinks, topLinkString to topAwesomeLink, and topLinkNumTweets to be displayed via awesome.ejs
+      res.render('word/awesome', {awesomeLinks:responseString, topAwesomeLink:topLinkString, topAwesomeLinkNumTweets:topLinkNumTweets});
+  });
 
 };
 
-//top link: <div id=linkurltop>
+
 
