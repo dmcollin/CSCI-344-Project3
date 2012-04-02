@@ -7,19 +7,22 @@ exports.index = function(req, res) {
     var responseString = "";
     var limit = 38; //will display 20, since the counts are part of the results
       if (results.length > limit){
-        for (var i = 0 ; i < limit ; i++) { 
-          if (i%2 == 0){
-            responseString += "<li> <a href='>" + results[i] + "'>" + results[i] + "'</a>";
-          }
-         else if (i%2 == 1){
-            responseString += " - " + results[i] + "</li><br />";
-         }
-        }
+        responseString += "<div class='linkurltop'> <a href='" + results[0] + "'>" + results[0] + "</a>" + " - " + results[1] + "</div><br />";
+        
+        for (var i = 2 ; i < limit ; i++) { 
+           if (i%2 == 0){
+                responseString += "<li> <a href='" + results[i] + "'>" + results[i] + "'</a>";
+              }
+             else if (i%2 == 1){
+                responseString += " - " + results[i] + "</li><br />";
+             }
+            }
       }
       else {
-        for (var i = 0 ; i < results.length ; i++) { 
+        responseString += "<div class='linkurltop'> <a href='" + results[0] + "'>" + results[0] + "</a>" + " - " + results[1] + "</div><br />";
+        for (var i = 2 ; i < results.length ; i++) { 
           if (i%2 == 0){
-            responseString += "<li> <a href='>" + results[i] + "'>" + results[i] + "'</a>";
+            responseString += "<li> <a href='" + results[i] + "'>" + results[i] + "'</a>";
           }
          else if (i%2 == 1){
             responseString += " - " + results[i] + "</li><br />";
@@ -31,4 +34,6 @@ exports.index = function(req, res) {
   }); 
 
 };
+
+//top link: <div id=linkurltop>
 
