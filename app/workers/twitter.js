@@ -2,6 +2,7 @@ var twitter = require('ntwitter');
 var redis = require('redis');
 var credentials = require('./credentials.js'); //read credentials from file
 var URL;
+var word = "awesome";
 
 //create redis client
 var client = redis.createClient(); //using local redis server, no arguments required
@@ -18,7 +19,7 @@ var twitter = new twitter({
 twitter.stream(
 	'statuses/filter', //return statuses that match tracked keywords
 	
-	{track: ['awesome']}, //track tweets that contain keywords defined in variable
+	{track: [word]}, //track tweets that contain keywords defined in variable
 
 	function(stream){
 		stream.on('data', function(tweet){
@@ -36,7 +37,7 @@ twitter.stream(
 					console.log(URL); //display the URL 
 
 					//store the URL in a sorted set in REDIS
-					client.zincrby('awesome', 1, URL); 
+					client.zincrby(word, 1, URL); 
 				}
 
 				catch (error) {
