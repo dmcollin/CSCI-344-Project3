@@ -26,11 +26,11 @@ twitter.stream(
 
 			try {
 				//test for expanded URLs
-				if (tweet.entities.urls[0].expanded_url != " ") { 
+				if (tweet.entities.urls[0].expanded_url) { 
 					URL = tweet.entities.urls[0].expanded_url; 
 					}
 				//test for shortened URLs
-				else if (tweet.entities.urls[0].url !=  " ") {
+				else if (tweet.entities.urls[0].url) {
 					URL = tweet.entities.urls[0].url; //test for url
 					}
 
