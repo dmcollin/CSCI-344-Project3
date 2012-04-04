@@ -39,7 +39,6 @@ exports.index = function(req, res) {
                   
               }
 
-
              }
             
       		  else if (i%2 == 1){
