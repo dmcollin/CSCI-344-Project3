@@ -2,26 +2,31 @@
 
 <!-- button to refresh the word (currently not able to search a new word) -->
 <div id="searchcontainer">
-	<div id="searchbox">
-		<p>CHOOSE YOUR WORD: </p>
+<div id="searchbox">
+<p>WHAT'S THE MOST AWESOME LINK IN THE TWITTERVERSE?
 
-	</div>
-	<div class="moveover">
-	<a href='awesome'class="btn">RANK IT!</a>
-	</div>
+</p>
+
+</div>
+<div class="moveover">
+<a href='awesome' class="btn">RANK 'EM!</a>
+</div>
 </div>
 
 
 <!-- html to display returned awesome links when button is pressed -->
 
 <div id="resultscontainer">
-	<div id="toplink">
-		<p>AND WITH <%- topAwesomeLinkNumTweets %> TWEETS, THE WINNER IS...</p>
-		<p id="linkurltop"><%- topAwesomeLink %></p>
-	</div>
-	<div id="linkurlothers">
-		<%- awesomeLinks %>
-	</div>
+<div id="toplink">
+<p>AND WITH <span id="numtop"><%- topAwesomeLinkNumTweets %></span> TWEETS, THE WINNER IS...</p>
+<p id="linkurltop"><%- topAwesomeLink %></p>
 </div>
+<div id="linkurlothers">
+<%- awesomeLinks %>
+</div>
+</div>
+
+
+
 
  	
